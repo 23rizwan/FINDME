@@ -1,0 +1,152 @@
+﻿@model BulkyWeb.Models.Product
+<style>
+    /* Add your custom styles here */
+    .container {
+        max-width: 1200px;
+        margin-top: 25px;
+        /* background-color: gray; */
+        border-radius: 5px;
+        background-color: azure;
+    }
+
+    .btn {
+        width: 150px;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+    /* Add more styles as needed */
+
+    .upload-container {
+        width: 600px;
+        height: 85px;
+        border: 2px dashed #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .preview {
+        width: 100%;
+        height: 100%;
+        display: none;
+        position: absolute;
+    }
+
+    .upload-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="lg:w-7/12 pb-10 pt-5 w-full p-4 flex flex-wrap justify-center shadow-2xl my-20 rounded-md mx-auto">
+            <div class="pb-5">
+                <h1 class="text-3xl font-bold text-center">Add Products</h1>
+            </div>
+            @using (Html.BeginForm("AddProduct", "Products", FormMethod.Post)){
+
+            <form action="" method="post" class="flex flex-col justify-start items-center w-full m-auto" id="registerForm">
+                <div class="input-fields">
+                    <div class="row">
+                        <div class=" mb-3">
+                            <label class="form-label font-semibold">Business Name</label>
+                                <input asp-for="BusinessName" type="text" class="form-control" id="businessName"
+                                   placeholder="Sterling Hospital" required>
+                            <div class="invalid-feedback">This field is required</div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-label font-semibold">Business Description</label>
+                            <input type="text" class="form-control" id="businessDes"
+                                   placeholder="Eye Treatment,Cancer Treatment.." required>
+                            <div class="invalid-feedback">This field is required</div>
+                        </div>
+                        <!-- Other fields go here -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label font-semibold">Location</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="location" placeholder="Enter Your Location" required>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary " style="margin-left:15px;">Get Location</button>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Enter Your Location</div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label font-semibold">Phone</label>
+                            <input type="text" class="form-control" id="phone" placeholder="9723130309" required>
+                            <div class="invalid-feedback">This field is required</div>
+                        </div>
+                        <div class="col mb-3">
+                            <label class="form-label font-semibold">Category</label>
+                            <select class="form-select" id="category" required>
+                                <option value="" selected disabled>Select a category</option>
+                                <option value="Option 1">Daily Needs</option>
+                                <option value="Option 2">Restaurent</option>
+                                <option value="Option 3">Hospital</option>
+                                <option value="Option 3">Education</option>
+                                <option value="Option 3">Gym</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <div class="invalid-feedback">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label font-semibold">Address</label>
+                            <textarea class="form-control" id="address" placeholder="123 Main St, City, Country" rows="3" required></textarea>
+                            <div class="invalid-feedback">This field is required</div>
+                        </div>
+                        <div class="col mb-3">
+                            <label class="form-label font-semibold">Upload Image</label>
+                            <div class="upload-container">
+                                <img id="preview" class="preview">
+                                <input type="file" id="image" class="upload-input" accept="image/*">
+                                <p>Click to upload or drag & drop</p>
+                            </div>
+                            <div class="invalid-feedback">This field is required</div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="w-full text-left">
+                    <div class="row justify-content-between">
+                        <div class="col-md-auto">
+                            <button type="submit" class="btn btn-danger">ADD</button>
+                        </div>
+                        <div class="col-md-auto">
+                            <button type="submit" class="btn btn-primary">SAVE</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            }
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('image').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const img = document.getElementById('preview');
+                img.src = event.target.result;
+                img.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

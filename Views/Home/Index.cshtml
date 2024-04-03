@@ -1,0 +1,190 @@
+﻿
+<body class="" style="background-image:linear-gradient( #280044, #5E0399);">
+    <div class="container  mt-5 d-flex justify-content-center align-items-center" style="height: 500px;">
+        <div class="row justify-content-center">
+            <div class="row">
+                <!-- Adjust the column width as needed -->
+                <div class="input-group">
+                    <input type="text" class="form-control" style="width:600px;background-color: rgba(255, 255, 255, 0.22);color:white;height:55px; border:none;font-size:20px" placeholder="Search...">
+                    <button type="submit" style=" width: 55px; color: red; background-color: rgba(255, 255, 255, 0.22)" class="btn search-btn"><i class="bi bi-search"></i></button>
+                </div>
+                <!-- Add Location Field -->
+                <div class="input-group mt-3  text-center m-auto" style="max-width:200px">
+                    @* <input type="text" class="form-control" style="width: 25px;background-color:transparent;height:45px" placeholder="Get Location...">
+                    <button style="" type="submit" class="btn btn-primary">Get Location</button> *@
+                    <button id="location-btn">Get Location</button>
+                    <select id="city-dropdown" style="display: none;">
+                        <!-- Default option for the user's city -->
+                        <option id="default-city-option" value="" disabled selected>Your City</option>
+                        <!-- Other city options will be populated dynamically -->
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container scrollcontainer hover-effect text-center border border-white" style="height:700px;">
+        <h1 class="bg-white m-auto" style="width:600px;border-radius:15px">Scroll for Categories</h1>
+    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 m-5">
+            <div class="col cat-icon-perent">
+                <a asp-controller="Subcategory" asp-action="Dailyneeds">
+                    <img class="object-fit-contain cat-icon" src="images/Toothbrush.svg" />
+                    <h3 class="bg-white mx-5">Daily Needs</h3>
+                </a>
+            </div>
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Graduation Cap.svg" />
+                    <h3 class="bg-white mx-5">Education</h3>
+                </a>
+            </div>
+
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Hospital 3.png" />
+                    <h3 class="bg-white mx-5">Hospital</h3>
+                </a>
+            </div>
+
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Food.svg" />
+                    <h3 class="bg-white mx-5">Restaurent</h3>
+                </a>
+            </div>
+
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Pullups.svg" />
+                    <h3 class="bg-white mx-5">Gym</h3>
+                </a>
+            </div>
+
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Toothbrush.svg" />
+                    <h3 class="bg-white mx-5">Daily Needs</h3>
+                </a>
+            </div>
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Graduation Cap.svg" />
+                    <h3 class="bg-white mx-5">Daily Needs</h3>
+                </a>
+            </div>
+            <div class="col cat-icon-perent">
+                <a asp-controller="YourControllerName" asp-action="YourActionName">
+                    <img class="object-fit-contain cat-icon" src="images/Toothbrush.svg" />
+                    <h3 class="bg-white mx-5">Daily Needs</h3>
+                </a>
+            </div>
+
+
+
+
+       @*  <div class="col  cat-icon-perent ">
+                <img class="object-fit-contain cat-icon"   src="images/Graduation Cap.svg" />
+                <h3 class="bg-white mx-5">Education</h3>
+        </div>
+        <div class="col   cat-icon-perent ">
+                <img class="object-fit-contain cat-icon" src="images/Hospital 3.png" />
+                <h3 class="bg-white mx-5">Hospital</h3>
+
+        </div>
+        <div class="col  cat-icon-perent ">
+                <img class="object-fit-contain cat-icon" src="images/Food.svg" />
+                <h3 class="bg-white mx-5">Restaurent</h3>
+
+        </div>
+        <div class="col  cat-icon-perent ">
+                <img class="object-fit-contain cat-icon" src="images/Pullups.svg" />
+                <h3 class="bg-white mx-5">Gym</h3>
+
+        </div>
+        <div class="col  cat-icon-perent ">
+                <img class="object-fit-contain cat-icon" src="images/Food.svg" />
+                <h3 class="bg-white mx-5">Food</h3>
+
+        </div>
+        <div class="col  cat-icon-perent ">
+                <img class="object-fit-contain cat-icon" src="images/Toothbrush.svg"/>
+                <h3 class="bg-white mx-5">Restaurent</h3>
+
+        </div>
+        <div class="col  cat-icon-perent ">
+                <img class="object-fit-contain cat-icon" src="images/Graduation Cap.svg" />
+                <h3 class="bg-white mx-5">Education</h3>
+
+        </div> *@
+    </div>
+    </div>
+    <div id="coordinates" class="text-center text-white mt-3"></div>
+    <script>
+        document.getElementById('location-btn').addEventListener('click', getLocation);
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Display coordinates
+            var coordinatesElement = document.getElementById('coordinates');
+            coordinatesElement.textContent = 'Latitude: ' + latitude + ', Longitude: ' + longitude;
+
+            // Reverse geocoding using OpenStreetMap Nominatim API to get user's city
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+                .then(response => response.json())
+                .then(data => {
+                    var userCity = data.address.city;
+                    if (!userCity) {
+                        userCity = "City not found";
+                    }
+
+                    // Hide the button
+                    document.getElementById('location-btn').style.display = 'none';
+
+                    // Show the dropdown
+                    var dropdown = document.getElementById('city-dropdown');
+                    dropdown.style.display = 'block';
+
+                    // Populate dropdown with user's city and other Indian cities
+                    var defaultOption = document.getElementById('default-city-option');
+                    defaultOption.text = userCity; // Set default city name
+                    defaultOption.value = userCity;
+
+                    // List of Indian cities
+                    var indianCities = [
+                        "Mumbai", "Delhi", "Bangalore", "Kolkata", "Chennai", "Hyderabad", "Ahmedabad", "Pune", "Surat", "Jaipur",
+                        "Lucknow", "Kanpur", "Nagpur", "Visakhapatnam", "Indore", "Thane", "Bhopal", "Patna", "Vadodara", "Ghaziabad",
+                        // Add more cities as needed
+                    ];
+
+                    // Sort cities alphabetically
+                    indianCities.sort();
+
+                    // Populate dropdown with Indian cities
+                    indianCities.forEach(city => {
+                        var option = document.createElement('option');
+                        option.text = city;
+                        option.value = city;
+                        dropdown.appendChild(option);
+                    });
+
+                    // Hide the default option if it's not available
+                    if (userCity === "City not found") {
+                        defaultOption.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+    </script>
+</body>
+

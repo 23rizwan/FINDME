@@ -1,0 +1,154 @@
+﻿
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-Lp2m/Iw/+ogWFGZsDv7ZR7s4MDPIsWlGd/f8TXNNo4ocUUYMADbg3pz1tjLaew5Wapz6aAYFymF2vxqteqjM7w==" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    .text-red {
+        color: red; /* Change color to red when clicked */
+    }
+</style>
+
+<body>
+    <div class="p-3 bg-body-secondary rounded-2 m-auto" style="width: 800px;">
+        <div class="d-flex flex-row">
+            <div>
+                <img id="image" style="width: 200px; height: 200px;" src="~/images/thumbnail.png" alt="">
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row">
+                    <p id="businessName" class="mx-2" style="font-size: 30px;padding-bottom: 0px; margin: 0px;">JAY TELECOM</p>
+                    <div class="bg-dark-subtle p-2 rounded-2" style="width: fit-content; height: fit-content;">
+                        <p id="category" style="padding-bottom: 4px; margin: 0px;">accessories</p>
+                    </div>
+                </div>
+                <div class="py-0 px-2 d-flex flex-row">
+                    <div class="p-2 rounded-2 bg-dark-subtle">
+                        <p style="padding-bottom: 2px; margin: 0px; font-weight: bold; color: white;" id="mainRating">0.0</p>
+                    </div>
+                    <div class="px-2" id="mainStars">
+                        <!-- Stars will be dynamically added here -->
+                    </div>
+                    <div class="p-0">
+                        <p class="mx-2" style="font-size: 16px;padding-bottom: 0px; margin: 0px; color:rgb(123, 123, 123)" id="mainNumRatings">0 Rating</p>
+                    </div>
+                </div>
+                <div class="py-2 px-2 d-flex flex-row">
+                    <div class="p-0" style="display: flex; align-items:start;">
+                        <i class="bi bi-geo-alt mt-1"></i>
+                        <p id="address" class="mx-2" style="font-size: 16px;padding-bottom: 0px; margin: 0px; color:rgb(0, 0, 0)">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus voluptas iure maxime quas accusantium ratione consequuntur</p>
+                    </div>
+                </div>
+                <div class="px-2 d-flex flex-row">
+                    <div class="p-0 mt-1" style="display: flex; align-items: top;">
+                        <button class="mx-1 px-3 py-2 rounded-2" style="background-color: #179470; border : none;">
+                            <img class="d-inline" style="width: 24px; height: 24px;" src="~/images/phone.svg" alt="">
+                            <p id="phone" class="d-inline px-2" style="padding-bottom: 2px; margin: 0px; font-weight: bold; color: white;">9723130309</p>
+                        </button>
+                        <button class="mx-1 px-3 py-2 rounded-2" style="background-color: #3080E0; border : none;">
+                            <p class="d-inline px-2" style="padding-bottom: 2px; margin: 0px; font-weight: bold; color: white;">Send Location</p>
+                        </button>
+                        <button id="rateUsBtn" class="mx-1 px-3 py-2 rounded-2" style="background-color: #3080E0; border : none;">Rate Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ratingModalLabel">Rate Us</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please rate our product:</p>
+                    <div id="ratingStars">
+                        <!-- Stars will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="submitRatingBtn">Rate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to generate star icons
+            function generateStars(numStars) {
+                let stars = '';
+                for (let i = 0; i < numStars; i++) {
+                    stars += '<span class="star-icon fa fa-star"></span>';
+                }
+                return stars;
+            }
+
+            // Function to update main card rating
+            function updateMainCardRating(newRating) {
+                $('#mainRating').text(newRating.toFixed(1));
+                $('#mainStars').html(''); // Clear previous stars
+                // Generate and append star icons
+                for (let i = 0; i < 5; i++) {
+                    if (i < newRating) {
+                        $('#mainStars').append('<span class="star-icon fa fa-star text-red"></span>');
+                    } else {
+                        $('#mainStars').append('<span class="star-icon fa fa-star"></span>');
+                    }
+                }
+            }
+
+            // Handle click event on Rate Us button
+            $('#rateUsBtn').on('click', function () {
+                // Reset modal content
+                $('#ratingStars').html(generateStars(5));
+
+                // Show modal
+                $('#ratingModal').modal('show');
+            });
+
+            // Handle click event on stars inside modal for rating
+            $('#ratingModal').on('click', '.star-icon', function () {
+                // Remove active class from all stars
+                $('.star-icon').removeClass('text-red');
+
+                // Add active class to clicked star and all previous stars
+                $(this).addClass('text-red');
+                $(this).prevAll('.star-icon').addClass('text-red');
+            });
+
+            // Handle click event on Rate button inside modal
+            $('#submitRatingBtn').on('click', function () {
+                // Calculate user's rating
+                const userRating = $('.star-icon.text-red').length;
+
+                // Handle the rating submission here
+                // You can send the rating to the server or perform any other action
+
+                // For demonstration purposes, let's update the rating on the main card
+                let currentRating = parseFloat($('#mainRating').text());
+                let numRatings = parseInt($('#mainNumRatings').text());
+
+                const newRating = ((currentRating * numRatings) + userRating) / (numRatings + 1);
+                const newNumRatings = numRatings + 1;
+
+                // Update main card rating
+                updateMainCardRating(newRating);
+
+                // Update number of ratings
+                $('#mainNumRatings').text(newNumRatings + ' Rating');
+
+                // Close modal
+                $('#ratingModal').modal('hide');
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-WtwYaZvIhjRVwJK7sTJIn6Fl/05VViqLAsSU7wYP1j6DDJ4sWHUf9USV5VjTcKRnMwDOa3PO1pVI/75Kslb7ag==" crossorigin="anonymous"></script>
+</body>
